@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const app = express();
+const path = require('path');
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
@@ -9,8 +11,7 @@ const userRoutes = require('./routes/user');
 //const rateLimit = require("express-rate-limit");
 //const mongoSanitize = require('express-mongo-sanitize');
 
-const app = express();
-const path = require('path');
+
 
 require('dotenv').config();
 
@@ -37,6 +38,5 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', sauceRoutes);
 console.log('ici');
 app.use('/api/auth', userRoutes);
-console.log(userRoutes);
 
 module.exports = app;
