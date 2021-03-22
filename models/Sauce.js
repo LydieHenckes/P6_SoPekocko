@@ -1,5 +1,7 @@
+// importtion de mongoose (ODM pour MongoDB)
 const mongoose = require('mongoose');
 
+// création de schema pour la ressource Sauce
 const sauceSchema = mongoose.Schema({
   userId: { type: String, required: true },
   name: { type: String, required: true },
@@ -14,4 +16,5 @@ const sauceSchema = mongoose.Schema({
   usersDisliked: { type:  [String], required: false },
 });
 
+//export de schema 
 module.exports = mongoose.model('Sauce', sauceSchema);
