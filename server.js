@@ -40,12 +40,8 @@ const errorHandler = error => {
   }
 };
 
-<<<<<<< HEAD
-const server = https.createServer(app);
-=======
 //création du serveur
 const server = http.createServer(app);
->>>>>>> lost-branch
 
 // sur l'événement 'error' - fonction de errorHandler 
 server.on('error', errorHandler);
