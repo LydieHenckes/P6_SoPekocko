@@ -53,6 +53,7 @@ app.use(function(req, res, next) {
 const apiLimiter = rateLimit({
 	windowMs: 2*60*1000, // 2 minutes
 	max: 10,
+	message: 'Vous avez dépassé le nombre de tentations de connecxion, re-essayer plus tard !'
  });
   // on applique uniquement pour les requêtes d'authéntification
  app.use('/api/auth', apiLimiter);
@@ -67,7 +68,6 @@ app.use(bodyParser.json());
 
 // express-mongo-sanitize nettoie les données fournies par l'utilisateur pour empêcher l'injection d'opérateur MongoDB
 app.use(mongoSanitize());
-
 
 
 // définition des routes
