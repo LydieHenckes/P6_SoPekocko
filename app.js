@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const fs = require('fs');
 
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
@@ -11,6 +12,8 @@ const hpp = require('hpp');
 const mongoSanitize = require('express-mongo-sanitize');
 const toobusy = require('toobusy-js');
 const rateLimit = require('express-rate-limit');
+const morgan = require('morgan');
+const session = require('express-session');
 
 // déclaration de l'application express
 const app = express();
@@ -40,6 +43,13 @@ app.use(helmet());
 // hpp - middleware pour se protéger contre les attaques de pollution des paramètres HTTP
 app.use(hpp());
 
+// création du fichier de la journalisation
+var accessLogStream = fs.createWriteStream(
+	path.join(__dirname, 'access.log'), {flags: 'a'}
+);
+// journalisation 
+app.use(morgan('combined', {stream: accessLogStream}));
+
 // utilisation de toobusy-js : si le serveur est trop occupé, envoie la réponse, sans traîter la requête, car cela peut être une attaque DoS
 app.use(function(req, res, next) {
 	if (toobusy()) {
@@ -63,8 +73,15 @@ const apiLimiter = rateLimit({
 app.use(express.urlencoded({ limit: "1kb" }));
 app.use(express.json({ limit: "1kb" }));
 
+// utilisation d'express-session (contre attaques XSS et CSRF)
+app.use(session({
+	secret: "KockoPe",
+	cookie :{ secure: true, path: "/", httpOnly: true, maxAge: null }
+}));
+
  // bodyparser permet d'analyser le body de la requête comme JSON 
 app.use(bodyParser.json());
+
 
 // express-mongo-sanitize nettoie les données fournies par l'utilisateur pour empêcher l'injection d'opérateur MongoDB
 app.use(mongoSanitize());
