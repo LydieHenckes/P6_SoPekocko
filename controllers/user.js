@@ -34,14 +34,14 @@ exports.signup = (req, res, next) => {
 	  .then(user => {
 		  // si il n'y a pas d'utilisateur avec cet email
 		 if (!user) {
-			return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+			return res.status(401).json({ error: 'Utilisateur non trouvé ou le mot de passe incorrect!' });
 		 }
 
 		 // comparaison des hash de nouveau mot de passe, avec hash du mot de passe dans la base
 		 bcrypt.compare(req.body.password, user.password)
 			.then(valid => {
 			  if (!valid) {
-				 return res.status(401).json({ error: 'Mot de passe incorrect !' });
+				 return res.status(401).json({ error: 'Utilisateur non trouvé ou le mot de passe incorrect!' });
 			  }
 			  // si les hashs provient du même mot de passe, envoie du userId et token 
 			  res.status(200).json({

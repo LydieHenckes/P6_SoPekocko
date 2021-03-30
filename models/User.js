@@ -6,7 +6,14 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 const userSchema = mongoose.Schema({
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true,
+              validate: {
+                validator: function (value) {
+                  if (value === '') return false;
+                  else return true; 
+                },
+                msg: "Le mot de passe vide ou contenant des caractères intérdits !"
+              } }
 });
 
 //application de uniqueValidator à la userSchema, qui au moment de sauvegarde vérifiera si le chapms indiqué comme unique est unique 
