@@ -9,7 +9,7 @@ Vous devrez avoir installés Node, npm, Angular et node-sass localement sur votr
 Cloner ce dépot: ce sera la partie backend de l'application. 
 Pour la partie frontend, clonez le référentiel GitHub suivant: https://github.com/OpenClassrooms-Student-Center/dwj-projet6 .
 
-Pour avoir l'accès à la base de données, ajouter le fichier .env qui vous a été envoyé à la racine du dossier backend.
+Pour avoir l'accès à la base de données, rénommer le fichier .env.txt qui vous a été envoyé en .env et ajouter le fichier .env à la racine du dossier backend.
 
 Dand un términal lancé à partir du dossier frontend, executer la commande 'ng serve'. 
 L'application sera accessible à http://localhost:4200/
